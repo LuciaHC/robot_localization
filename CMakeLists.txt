@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(robot_localization)
+#dependencias modificadas
 
 if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
@@ -62,6 +63,7 @@ include_directories(
   include
   ${EIGEN3_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
+  ${YAML_CPP_INCLUDE_DIRS} ###
 )
 
 add_library(
@@ -75,6 +77,7 @@ add_library(
   src/ros_filter.cpp
   src/ros_filter_utilities.cpp
   src/ros_robot_localization_listener.cpp)
+
 
 rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
 target_link_libraries(${library_name} "${cpp_typesupport_target}")
@@ -103,7 +106,8 @@ target_link_libraries(
   ${library_name}
   ${GeographicLib_LIBRARIES}
   ${EIGEN3_LIBRARIES}
-  yaml-cpp::yaml-cpp
+  #yaml-cpp::yaml-cpp
+  yaml-cpp
 )
 
 ament_target_dependencies(
@@ -129,6 +133,7 @@ ament_target_dependencies(
 target_link_libraries(
   ekf_node
   ${library_name}
+  yaml-cpp ###
 )
 
 ament_target_dependencies(
@@ -139,6 +144,7 @@ ament_target_dependencies(
 target_link_libraries(
   ukf_node
   ${library_name}
+  yaml-cpp ###
 )
 
 ament_target_dependencies(
@@ -149,6 +155,7 @@ ament_target_dependencies(
 target_link_libraries(
   navsat_transform_node
   ${library_name}
+  yaml-cpp ###
 )
 
 ament_target_dependencies(
@@ -159,6 +166,7 @@ ament_target_dependencies(
 target_link_libraries(
   robot_localization_listener_node
   ${library_name}
+  yaml-cpp ###
 )
 
 ament_target_dependencies(
